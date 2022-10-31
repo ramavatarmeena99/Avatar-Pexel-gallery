@@ -4,7 +4,7 @@ import { API_KEY } from "../../key";
 import styled from "styled-components";
 
 export default function MainContainer() {
-  // const [selectImage, setSelectImage] = useState([]);
+  // const [search, setSearch] = useState();
   const [photos, setPhotos] = useState([]);
   const [query, setQuery] = useState("animal");
 
@@ -30,8 +30,12 @@ export default function MainContainer() {
 
   useEffect(() => {
     getPhotos();
-  }, []);
-  const onKeyDownHandler = (e) => {
+  });
+  const search = ()=>{
+    getPhotos();
+
+  }
+  const onKeyClick = (e) => {
     if (e.keyCode === 13) {
       getPhotos();
     }
@@ -43,11 +47,12 @@ export default function MainContainer() {
         <ForSearch>
         <Input
         className="inputSearch"
-        onKeyDown={onKeyDownHandler}
-        placeholder="Search for free photos"
+        onKeyDown={onKeyClick}
+        placeholder="Search Image"
         onChange={(e) => setQuery(e.target.value)}
         value={query}
       />
+      <Button onClick={search}>SEARCH</Button>
         </ForSearch>
      <AllSearchImage>
      {photos?.map((item, index) => {
@@ -122,4 +127,14 @@ const Input = styled.input`
   border:1px solid green;
   padding-left:10px;
   font-size:18px;
+`;
+
+const Button = styled.button`
+  width: 100px;
+  height: 40px;
+  border-radius: 5px;
+  border:1px solid green;
+  font-size:18px;
+  cursor: pointer;
+  margin:10px;
 `;
