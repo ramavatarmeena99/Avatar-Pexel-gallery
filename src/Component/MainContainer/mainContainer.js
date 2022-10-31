@@ -1,19 +1,13 @@
 import React, { useEffect, useState } from "react";
-// import { Image } from '../../ImageData';
 import { API_KEY } from "../../key";
 import styled from "styled-components";
 
 export default function MainContainer() {
-  // const [search, setSearch] = useState();
   const [photos, setPhotos] = useState([]);
   const [query, setQuery] = useState("animal");
 
-
-
   const getPhotos = async () => {
-    // let url = `https://api.pexels.com/v1/curated?per_page=50/search?query=${query}`;
     let url = `https://api.pexels.com/v1/search?query=${query}=query&per_page=48`;
-
 
     await fetch(url, {
       headers: {
@@ -31,10 +25,9 @@ export default function MainContainer() {
   useEffect(() => {
     getPhotos();
   });
-  const search = ()=>{
+  const search = () => {
     getPhotos();
-
-  }
+  };
   const onKeyClick = (e) => {
     if (e.keyCode === 13) {
       getPhotos();
@@ -45,28 +38,33 @@ export default function MainContainer() {
     <>
       <Container>
         <ForSearch>
-        <Input
-        className="inputSearch"
-        onKeyDown={onKeyClick}
-        placeholder="Search Image"
-        onChange={(e) => setQuery(e.target.value)}
-        value={query}
-      />
-      <Button onClick={search}>SEARCH</Button>
+          <Input
+            className="inputSearch"
+            onKeyDown={onKeyClick}
+            placeholder="Search Image"
+            onChange={(e) => setQuery(e.target.value)}
+            value={query}
+          />
+          <Button onClick={search}>SEARCH</Button>
         </ForSearch>
-     <AllSearchImage>
-     {photos?.map((item, index) => {
-          return (
-            <Div key={index}>
-              <Img src={item?.src.medium} alt="all set"></Img>
-            </Div>
-          );
-        })}
-     </AllSearchImage>
-       
+        <AllSearchImage>
+          {photos?.map((item, index) => {
+            return (
+              <Div key={index}>
+                <Img src={item?.src.medium} alt="all set"></Img>
+              </Div>
+            );
+          })}
+        </AllSearchImage>
       </Container>
       <div
-      style={{width:"100%", height:"7vh", position:"fixed", bottom:"0px", left:"0px"}}
+        style={{
+          width: "100%",
+          height: "7vh",
+          position: "fixed",
+          bottom: "0px",
+          left: "0px",
+        }}
       >
         {/* <Button onClick={onBack}>BACK</Button>
         <Button onClick={onNext}>NEXT</Button> */}
@@ -79,7 +77,7 @@ const Container = styled.div`
   width: 100%;
   height: auto;
   display: flex;
-  flex-direction:column;
+  flex-direction: column;
   align-items: flex-start;
   justify-content: flex-start;
   flex-wrap: wrap;
@@ -96,12 +94,11 @@ const AllSearchImage = styled.div`
   width: 100%;
   height: auto;
   display: flex;
-  flex-direction:row;
+  flex-direction: row;
   align-items: flex-start;
   justify-content: center;
   flex-wrap: wrap;
 `;
-
 
 const Div = styled.div`
   max-width: 20%;
@@ -124,17 +121,17 @@ const Input = styled.input`
   width: 60%;
   height: 40px;
   border-radius: 5px;
-  border:1px solid green;
-  padding-left:10px;
-  font-size:18px;
+  border: 1px solid green;
+  padding-left: 10px;
+  font-size: 18px;
 `;
 
 const Button = styled.button`
   width: 100px;
   height: 40px;
   border-radius: 5px;
-  border:1px solid green;
-  font-size:18px;
+  border: 1px solid green;
+  font-size: 18px;
   cursor: pointer;
-  margin:10px;
+  margin: 10px;
 `;
