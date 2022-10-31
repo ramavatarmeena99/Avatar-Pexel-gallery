@@ -6,7 +6,7 @@ export default function Header() {
     <HeaderDetails
 
     >
-        <RenderImage>Render Image</RenderImage>
+        <RenderImage>Avatar Pexels </RenderImage>
          </HeaderDetails>
   )
 }
@@ -23,5 +23,5 @@ border:1px solid gray;
 `;
 const RenderImage = styled.p`
 font-size:22px;
-font-weight:700;
+font-weight:600;
 `;
