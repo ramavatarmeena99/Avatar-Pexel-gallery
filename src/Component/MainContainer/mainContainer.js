@@ -2,13 +2,22 @@ import React, { useEffect, useState } from "react";
 import { API_KEY } from "../../key";
 import styled from "styled-components";
 
+
 export default function MainContainer() {
   const [photos, setPhotos] = useState([]);
-  const [query, setQuery] = useState("animal");
+  const [query, setQuery] = useState("");
+  const [data, setData] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
-  const getPhotos = async () => {
+  const getPhotos = async (type) => {
     let url = `https://api.pexels.com/v1/search?query=${query}=query&per_page=48`;
+    if (data?.next_page && type === "next") {
+      url = data.next_page;
+    }
 
+    if (data.prev_page && type === "back") {
+      url = data.prev_page;
+    }
     await fetch(url, {
       headers: {
         Authorization: API_KEY,
@@ -18,13 +27,16 @@ export default function MainContainer() {
         return res.json();
       })
       .then((res) => {
+        setData(res);
+        setIsLoading(false)
         setPhotos(res.photos);
+        
       });
   };
 
-  useEffect(() => {
-    getPhotos();
-  });
+  // useEffect(() => {
+  //   getPhotos();
+  // });
   const search = () => {
     getPhotos();
   };
@@ -47,6 +59,29 @@ export default function MainContainer() {
           />
           <Button onClick={search}>SEARCH</Button>
         </ForSearch>
+        {isLoading ? (
+               <div
+               style={{
+                 width: "100%",
+                 height: "auto",
+                 display: "flex",
+                 alignItems: "center",
+                 justifyContent: "center",
+                 paddingTop: "100px",
+                 fontSize: "20px",
+                 fontWeight: "700",
+                 lineHeight: "17px",
+                 color: "green",
+               }}
+             >
+              <div
+
+              
+              >
+Search Image According To You
+              </div>
+             </div>
+      ):(
         <AllSearchImage>
           {photos?.map((item, index) => {
             return (
@@ -56,6 +91,8 @@ export default function MainContainer() {
             );
           })}
         </AllSearchImage>
+      )}
+        
       </Container>
       <div
         style={{
@@ -66,8 +103,12 @@ export default function MainContainer() {
           left: "0px",
         }}
       >
-        {/* <Button onClick={onBack}>BACK</Button>
-        <Button onClick={onNext}>NEXT</Button> */}
+         <div>
+        <Button disabled={data?.page === 1} onClick={() => getPhotos("back")}>
+          Prev
+        </Button>
+        <Button onClick={() => getPhotos("next")}>NEXT</Button>
+      </div>
       </div>
     </>
   );
