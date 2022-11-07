@@ -40,6 +40,7 @@ export default function MainContainer() {
   const search = () => {
     getPhotos();
   };
+  
   const onKeyClick = (e) => {
     if (e.keyCode === 13) {
       getPhotos();
