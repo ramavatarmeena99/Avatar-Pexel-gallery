@@ -1,20 +1,21 @@
-![](https://github.com/ramavatarmeena99/Avatar-Render-Image/blob/main/src/Component/Assest/RenderImage.png?raw=true)
+![](https://github.com/ramavatarmeena99/Avatar-Pexel-gallery/blob/main/src/Component/Assest/AvatarPexels.png?raw=true)
 
 ## About Project
 
 
 ## Features
-* Add new image conditionally
-* Remove last render image 
+* Search Image
+* Pagination Add
 
 ## Technology Stack Used In This Project
 * ReactJs
 * JavaScript
 * Styled Components
 * HTML/CSS
+* API
 
 ## Project Live
-### [Click here](https://avatarrenderimage.netlify.app/) 
+### [Click here](https://avatarpexelspictures.netlify.app/) 
 
 ## Run This Project on Your Local Machine
 
@@ -24,7 +25,7 @@
     ```
 2. Change the directory 
     ```
-    cd avatar-render-image
+    cd avatar-pexels-image
     ```
 3. Install
     ```
@@ -75,7 +76,7 @@
     * If you think that something is missing from the readme file. You can introduce new sections for the readme file or can improve the existing one. 
 
 
-[Click here](https://github.com/ramavatarmeena99/Avatar-Render-Image) to Contribute 
+[Click here](https://github.com/ramavatarmeena99/Avatar-Pexel-gallery) to Contribute 
 
 
 
