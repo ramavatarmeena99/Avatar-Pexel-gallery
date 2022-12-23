@@ -2,12 +2,12 @@ import React, { useState } from "react";
 import { API_KEY } from "../../key";
 import styled from "styled-components";
 
-
 export default function MainContainer() {
   const [photos, setPhotos] = useState([]);
   const [query, setQuery] = useState("");
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [isSearching, setIsSearching] = useState(true);
 
   const getPhotos = async (type) => {
     let url = `https://api.pexels.com/v1/search?query=${query}=query&per_page=48`;
@@ -28,9 +28,8 @@ export default function MainContainer() {
       })
       .then((res) => {
         setData(res);
-        setIsLoading(false)
+        setIsLoading(false);
         setPhotos(res.photos);
-        
       });
   };
 
@@ -40,11 +39,14 @@ export default function MainContainer() {
   const search = () => {
     getPhotos();
   };
-  
+
   const onKeyClick = (e) => {
     if (e.keyCode === 13) {
       getPhotos();
     }
+  };
+  const onLoad = () => {
+    setIsSearching(false);
   };
 
   return (
@@ -61,39 +63,51 @@ export default function MainContainer() {
           <Button onClick={search}>SEARCH</Button>
         </ForSearch>
         {isLoading ? (
-               <div
-               style={{
-                 width: "100%",
-                 height: "auto",
-                 display: "flex",
-                 alignItems: "center",
-                 justifyContent: "center",
-                 paddingTop: "100px",
-                 fontSize: "20px",
-                 fontWeight: "700",
-                 lineHeight: "17px",
-                 color: "green",
-               }}
-             >
-              <div
-
-              
-              >
-Search Image According To You
-              </div>
-             </div>
-      ):(
-        <AllSearchImage>
-          {photos?.map((item, index) => {
-            return (
-              <Div key={index}>
-                <Img src={item?.src.medium} alt="all set"></Img>
-              </Div>
-            );
-          })}
-        </AllSearchImage>
-      )}
-        
+          <div
+            style={{
+              width: "100%",
+              height: "auto",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              paddingTop: "100px",
+              fontSize: "20px",
+              fontWeight: "700",
+              lineHeight: "17px",
+              color: "green",
+            }}
+          >
+            <div>Search Image According To You</div>
+          </div>
+        ) : (
+          <AllSearchImage>
+            {photos?.map((item, index) => {
+              return (
+                <Div key={index}>
+                  <Img
+                    onLoad={onLoad}
+                    src={item?.src.medium}
+                    alt="all set"
+                  ></Img>
+                  {isSearching && (
+                    <div
+                      style={{
+                        background: "gray",
+                        width: "95%",
+                        height: "95%",
+                        position: "absolute",
+                        margin: "5px",
+                        borderRadius: " 10px",
+                        top: "0px",
+                        left: "0px",
+                      }}
+                    />
+                  )}
+                </Div>
+              );
+            })}
+          </AllSearchImage>
+        )}
       </Container>
       <div
         style={{
@@ -104,12 +118,12 @@ Search Image According To You
           left: "0px",
         }}
       >
-         <div>
-        <Button disabled={data?.page === 1} onClick={() => getPhotos("back")}>
-          Prev
-        </Button>
-        <Button onClick={() => getPhotos("next")}>NEXT</Button>
-      </div>
+        <div>
+          <Button disabled={data?.page === 1} onClick={() => getPhotos("back")}>
+            Prev
+          </Button>
+          <Button onClick={() => getPhotos("next")}>NEXT</Button>
+        </div>
       </div>
     </>
   );
@@ -144,16 +158,18 @@ const AllSearchImage = styled.div`
 
 const Div = styled.div`
   max-width: 20%;
-  flex-basis: 100px;
+  flex-basis: 200px;
   height: 300px;
   display: flex;
   align-items: center;
   justify-content: center;
   padding-top: 5px;
+  position: relative;
+  padding:10px;
 `;
 
 const Img = styled.img`
-  width: 200px;
+  width: 100%;
   height: 100%;
   margin: 5px;
   border-radius: 10px;
