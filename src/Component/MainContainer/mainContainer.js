@@ -166,6 +166,9 @@ const Div = styled.div`
   padding-top: 5px;
   position: relative;
   padding:10px;
+  @media (max-width: 768px) {
+  max-width: 50%;
+  }
 `;
 
 const Img = styled.img`
